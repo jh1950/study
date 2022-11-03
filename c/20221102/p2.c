@@ -30,14 +30,13 @@ int main(void) {
 	int b = rand()%3;
 
 	if (a == 0) {
-		printf("철수 : 가위");
+		printf("철수 : 가위, ");
 	} else if (a == 1) {
-		printf("철수 : 바위");
+		printf("철수 : 바위, ");
 	} else {
-		printf("철수 : 보");
+		printf("철수 : 보, ");
 	}
 
-	printf(", ");
 	if (b == 0) {
 		printf("영희 : 가위\n");
 	} else if (b == 1) {
