@@ -14,13 +14,10 @@
  * 1 1 2 3 5 8 13 21 
  */
 
-
-
-int a = 0, b = 1, c = 1;
-
 void test(int i) {
+	int a = 0, b = 1, c;
 	for (int j=0; j<i; j++) {
-		printf("%d ", c);
+		printf("%d ", b);
 		c = a + b;
 		a = b;
 		b = c;
