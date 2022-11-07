@@ -14,6 +14,7 @@
  * 1 1 2 3 5 8 13 21 
  */
 
+/*
 void test(int i) {
 	int a = 0, b = 1, c;
 	for (int j=0; j<i; j++) {
@@ -30,6 +31,27 @@ int main(void) {
 	int i;
 	scanf("%d", &i);
 	test(i);
+
+	return 0;
+}
+*/
+
+void test(int a, int b, int i) {
+	if (i == 0) {
+		return;
+	}
+
+	printf("%d ", b);
+	test(b, a + b, i-1);
+	return;
+}
+
+int main(void) {
+	int a = 0, b = 1;
+	int i;
+	scanf("%d", &i);
+	test(a, b, i);
+	printf("\n");
 
 	return 0;
 }
