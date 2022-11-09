@@ -20,7 +20,7 @@
 
 int main(void) {
 	int a;
-	printf("철수읭 나이 : ");
+	printf("철수의 나이 : ");
 	scanf("%d", &a);
 
 	if (a <= 6 || 60 <= a) {
