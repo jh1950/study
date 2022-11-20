@@ -13,7 +13,7 @@ int main(void) {
 
 	char str[10] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 
-	char str1[] = "Hwllo, World";
+	char str1[] = "Hello, World";
 
 	char str2[50];
 	scanf("%s", str2);
