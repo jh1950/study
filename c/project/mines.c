@@ -4,12 +4,12 @@
 #include <time.h>
 #include "getch.h"
 
-const int x_min = 5, x_max = 100;
-const int y_min = 5, y_max = 100;
 const int xs[8] = {-1, 0, 1, 1, 1, 0, -1, -1};
 const int ys[8] = {-1, -1, -1, 0, 1, 1, 1, 0};
 
 struct xy { int x, y; };
+struct xy min = {5, 5};
+struct xy max = {100, 100};
 struct xy size;
 int mine_cnt = 0;
 int open_cnt = 0;
@@ -28,8 +28,8 @@ void init_info(void) {
 	printf("\n");
 	printf("난이도	: 0(초급), 1(중급), 2(고급)\n");
 	printf("크기	: 가로x세로 (ex. 5x5)\n");
-	printf("	  %d <= 가로 <= %d\n", x_min, x_max);
-	printf("	  %d <= 세로 <= %d\n", y_min, y_max);
+	printf("	  %d <= 가로 <= %d\n", min.x, max.x);
+	printf("	  %d <= 세로 <= %d\n", min.y, max.y);
 	printf("\n");
 	printf("* * * * * * * * * * * * * * * * * * *\n");
 	printf("\n");
@@ -46,7 +46,7 @@ int init() {
 	size.x = 0; size.y = 0;
 	printf("크기 : ");
 	scanf("%dx%d", &size.x, &size.y);
-	if (size.x < x_min || size.x > x_max || size.y < y_min || size.y > y_max) {
+	if (size.x < min.x || size.x > max.x || size.y < min.y || size.y > max.y) {
 		return 1;
 	}
 
@@ -247,7 +247,7 @@ int run(int board[size.y][size.x], int play[size.y][size.x]) {
 }
 
 
-void game_over(e) {
+void game_over(int e) {
 	if (e) {
 		if (e == 1) { printf("Success!"); }
 		else if (e == 2) { printf("Boom!"); }
