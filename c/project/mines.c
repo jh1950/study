@@ -26,26 +26,36 @@ void init_info(void) {
 	printf("\n");
 	printf("* * * * * * * * Mines * * * * * * * *\n");
 	printf("\n");
-	printf("난이도	: 0(초급), 1(중급), 2(고급)\n");
-	printf("크기	: 가로x세로 (ex. 5x5)\n");
-	printf("	  %d <= 가로 <= %d\n", min.x, max.x);
-	printf("	  %d <= 세로 <= %d\n", min.y, max.y);
+	printf("Level	: 1(Beginning), 2(Intermediate), 3(Advanced)\n");
+	printf("Size	: Rows Columns (ex. 5 5)\n");
+	printf("	  %d <= Rows <= %d\n", min.x, max.x);
+	printf("	  %d <= Columns <= %d\n", min.y, max.y);
 	printf("\n");
 	printf("* * * * * * * * * * * * * * * * * * *\n");
 	printf("\n");
 }
 
+void keypress(int flag_cnt) {
+	printf("\n");
+	printf("  Mines: %d/%d\n", flag_cnt, mine_cnt);
+	printf("		n : Select\n");
+	printf("    w		m : Flag, Mark\n");
+	printf("  a s d		j : Check the adjacent block\n");
+	printf("		q : Quit\n");
+	printf("\n");
+}
+
 int init() {
 	int game_level = 0;
-	printf("난이도 : ");
+	printf("Level : ");
 	scanf("%d", &game_level);
 	if (game_level < 1 || 3 < game_level) {
 		return 1;
 	}
 
 	size.x = 0; size.y = 0;
-	printf("크기 : ");
-	scanf("%dx%d", &size.x, &size.y);
+	printf("Size : ");
+	scanf("%d %d", &size.x, &size.y);
 	if (size.x < min.x || size.x > max.x || size.y < min.y || size.y > max.y) {
 		return 1;
 	}
@@ -181,15 +191,19 @@ int run(int board[size.y][size.x], int play[size.y][size.x]) {
 	while (1) {
 		result = board_print("", play, pos.x, pos.y);
 		if (result) { break; }
-		if (size.x*size.x-mine_cnt == open_cnt) { result = 1; break; }
+		// if (size.x*size.x-mine_cnt == open_cnt) { result = 1; break; }
+		int echeck = 0;
+		for (int i=0; i<size.y; i++) {
+			for (int j=0; j<size.x; j++) {
+				int bt = board[i][j];
+				int pt = play[i][j];
+				if (0 < bt && bt < 9 && bt == pt) { echeck++; }
+				else if (bt == 9) { echeck++; }
+			}
+		}
+		if (echeck + mine_cnt == size.x * size.x) { result = 1; break; }
 
-		printf("\n");
-		printf("  Mines: %d/%d\n", flag_cnt, mine_cnt);
-		printf("		n : Select\n");
-		printf("    w		m : Mark\n");
-		printf("  a s d		j : Check\n");
-		printf("		q : Quit\n");
-		printf("\n");
+		keypress(flag_cnt);
 
 		k = getch();
 		if (k == 'q') {
@@ -215,15 +229,15 @@ int run(int board[size.y][size.x], int play[size.y][size.x]) {
 				if (n == 0) { open(board, play, pos.x, pos.y); }
 			} else if (k == 'j') {
 				if (0 < n && n < 9) {
-					int check = 0;
+					int acheck = 0;
 					struct xy a;
 					for (int i=0; i<8; i++) {
 						a.x = pos.x+xs[i];
 						a.y = pos.y+ys[i];
 						if (a.x < 0 || size.x <= a.x || a.y < 0 || size.y <= a.y) { continue; }
-						if (play[a.y][a.x] == -1) { check++; }
+						if (play[a.y][a.x] == -1) { acheck++; }
 					}
-					if (n != check) { continue; }
+					if (n != acheck) { continue; }
 					for (int i=0; i<8; i++) {
 						a.x = pos.x+xs[i];
 						a.y = pos.y+ys[i];
